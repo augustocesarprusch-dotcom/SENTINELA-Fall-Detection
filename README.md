@@ -1,50 +1,32 @@
-# SENTINELA-Fall-Detection
-"Sistema vestível de baixo custo para detecção de quedas em idosos, utilizando ESP32-C3, sensores inerciais e localização indoor via BLE Beacon, com alertas contextualizados via WhatsApp."
-SENTINELA: Sistema Vestível para Detecção de Quedas de Idosos
-O SENTINELA é um protótipo de sistema vestível de baixo custo desenvolvido para detetar quedas em idosos, estimar a localização interna por proximidade e enviar alertas automáticos contextualizados.
+# SENTINELA: Sistema Vestível para Detecção de Quedas de Idosos
 
-📝 Resumo do Projeto
-O projeto utiliza sensoriamento inercial e comunicação sem fios para reduzir o tempo de resposta em caso de acidentes domésticos. Ao contrário de alarmes genéricos, o SENTINELA informa o setor provável (ex: quarto, casa de banho) onde o evento ocorreu, facilitando o socorro.
+[cite_start]O **SENTINELA** é um sistema vestível (*wearable*) de baixo custo desenvolvido para a detecção automática de quedas em idosos, integrando estimativa de localização indoor e alertas contextualizados via WhatsApp[cite: 4, 11, 160, 167].
 
-🛠️ Arquitetura de Hardware
-A implementação consolidada utiliza os seguintes componentes principais:
-Microcontrolador: ESP32-C3 SuperMini.
+## 📝 Resumo do Projeto
+[cite_start]O sistema utiliza processamento embarcado para detetar eventos críticos e fornecer uma resposta assistiva ágil[cite: 26, 40, 180, 193]. [cite_start]A localização é estimada por proximidade com **BLE Beacons**, permitindo identificar o setor (ex: sala, quarto, casa de banho) onde ocorreu o evento, oferecendo valor operacional superior a alarmes genéricos[cite: 4, 25, 65, 179, 216].
 
-Sensor Inercial: MPU6050 (Acelerómetro e Giroscópio) alimentado a 3,3 V.
+## 🛠️ Arquitetura de Hardware
+[cite_start]A implementação consolidada utiliza os seguintes componentes principais[cite: 6, 13, 162, 169]:
+* [cite_start]**Microcontrolador:** ESP32-C3 SuperMini[cite: 6, 116, 162, 260].
+* [cite_start]**Sensor Inercial:** MPU6050 para leitura de aceleração e orientação através de algoritmos de baixa complexidade computacional[cite: 6, 54, 83, 162, 205, 232].
+* [cite_start]**Interface Local:** Botão de pânico em GPIO7 para acionamento manual e Buzzer ativo de 3V em GPIO1 para feedback sonoro[cite: 6, 85, 86, 162, 234, 235].
+* [cite_start]**Gestão de Energia:** Bateria Li-Po de 3,7 V, módulo de carga TP4056 e conversor boost MT3608 ajustado para 5,0 V para estabilizar a alimentação[cite: 6, 13, 87, 162, 169, 236].
 
-Gestão de Energia: Bateria Li-Po de 3,7 V, módulo de carga TP4056 e conversor boost MT3608 (ajustado para 5,0 V).
+## 📡 Comunicação e Camada de Serviço
+[cite_start]O projeto utiliza uma arquitetura em camadas para garantir modularidade e manutenção[cite: 45, 198]:
+* [cite_start]**Wi-Fi:** Responsável pelo envio de notificações via API Twilio para o WhatsApp do cuidador[cite: 26, 72, 92, 180, 221, 239].
+* [cite_start]**Bluetooth Low Energy (BLE):** Utilizado para a varredura de beacons e classificação de setor por proximidade[cite: 65, 92, 216, 239].
 
-Interfaces Locais: Botão de pânico em GPIO7 e Buzzer ativo em GPIO1 (via transistor BC547).
+## 🔒 Segurança e Privacidade
+**AVISO IMPORTANTE:** Seguindo as melhores práticas de segurança e visando a proteção de dados pessoais, todas as informações sensíveis foram removidas ou substituídas por *placeholders* no código-fonte disponível:
+* **SSID/Password:** Credenciais de rede Wi-Fi removidas.
+* **Twilio Auth:** Chaves de autenticação (*Account SID* e *Auth Token*) da API de comunicação removidas.
+* **Telefones:** Números de contacto de emergência ocultados.
 
-💻 Arquitetura de Software
-O sistema está organizado em quatro camadas modulares:
+## 📊 Resultados e Validação
+[cite_start]Os testes de bancada confirmaram a integridade elétrica e a viabilidade funcional do fluxo ponta a ponta (evento -> localização -> alerta)[cite: 7, 106, 163, 250].
+* [cite_start]**Estabilidade:** A nova topologia com MT3608 estabilizou o protótipo durante operações simultâneas de Wi-Fi e BLE[cite: 90, 102, 237, 250].
+* **Ambiente de Análise:** Os scripts de visualização de dados e métricas de sinal (RSSI) utilizados na defesa podem ser consultados via **Google Colab** através do link encurtado nos slides da apresentação.
 
-Borda (Edge): Processamento local no wearable (leitura de sensores e detecção de quedas via Máquina de Estados Finitos).
-
-Comunicação: Transporte de dados via Wi-Fi e localização indoor por proximidade via BLE (Bluetooth Low Energy).
-
-Serviço: Notificação contextualizada enviada ao cuidador através da API Twilio para o WhatsApp.
-
-Evolução Computacional: Prevê a futura integração com bases de dados para persistência e painéis históricos.
-
-🚀 Funcionalidades Principais
-
-Detecção de Quedas: Algoritmo baseado em padrões inerciais (pico de aceleração e mudança de orientação).
-
-Localização Indoor: Classificação por setor baseada no beacon Bluetooth dominante, utilizando filtragem por média móvel e histerese.
-
-Alertas Contextualizados: Envio de mensagens automáticas que incluem o tipo de evento, horário e local estimado.
-
-Minimização de Dados: Fluxo de informação alinhado com a LGPD, restringindo-se ao essencial para o socorro assistivo.
-
-📈 Evoluções Futuras
-Embora validado em bancada, o projeto prevê melhorias como:
-
-Implementação de backend em Node.js e MongoDB para histórico de eventos.
-
-Miniaturização do circuito em PCB dedicada.
-
-Refinamento do algoritmo para redução de falsos positivos.
-
-🎓 Autor
-Augusto Cesar Prusch Machado - Graduando em Engenharia da Computação pela UniFECAF.
+## 🎓 Autor
+* [cite_start]**Augusto Cesar Prusch Machado** - Graduando em Engenharia da Computação pela UniFECAF[cite: 3, 17, 32, 158].
